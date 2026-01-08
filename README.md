@@ -1,3 +1,3 @@
 # learning_js
-## AJAY DHANGAR
+## AUTOHOR (Ajay Dhangar)
 this is my Java Script learning journy
