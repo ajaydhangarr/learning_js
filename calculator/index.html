@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculator</title>
+<style>
+*{
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#f2f4f7;
+}
+.calculator{
+    width:320px;
+    background:#ffffff;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+    padding:20px;
+}
+.display{
+    width:100%;
+    height:60px;
+    border:none;
+    background:#f9fafb;
+    border-radius:8px;
+    text-align:right;
+    font-size:24px;
+    padding:10px;
+    margin-bottom:15px;
+}
+.buttons{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+}
+button{
+    height:55px;
+    border:none;
+    border-radius:8px;
+    font-size:18px;
+    cursor:pointer;
+    background:#e5e7eb;
+    transition:0.2s;
+}
+button:hover{
+    background:#d1d5db;
+}
+.operator{
+    background:#6366f1;
+    color:#fff;
+}
+.operator:hover{
+    background:#4f46e5;
+}
+.equal{
+    grid-column:span 2;
+    background:#22c55e;
+    color:#fff;
+}
+.equal:hover{
+    background:#16a34a;
+}
+.clear{
+    background:#ef4444;
+    color:#fff;
+}
+.clear:hover{
+    background:#dc2626;
+}
+</style>
+</head>
+<body>
+
+<div class="calculator">
+    <input type="text" class="display" id="display" readonly>
+    <div class="buttons">
+        <button class="clear">C</button>
+        <button>/</button>
+        <button>*</button>
+        <button class="operator">-</button>
+
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+        <button class="operator">+</button>
+
+        <button>4</button>
+        <button>5</button>
+        <button>6</button>
+        <button>.</button>
+
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button class="equal">=</button>
+
+        <button>0</button>
+        <button>00</button>
+    </div>
+</div>
+
+<script>
+class Calculator {
+    constructor(displayElement) {
+        this.displayElement = displayElement;
+        this.reset();
+    }
+
+    reset() {
+        this.currentValue = "";
+        this.updateDisplay();
+    }
+
+    append(value) {
+        this.currentValue += value;
+        this.updateDisplay();
+    }
+
+    calculate() {
+        try {
+            this.currentValue = eval(this.currentValue).toString();
+        } catch {
+            this.currentValue = "Error";
+        }
+        this.updateDisplay();
+    }
+
+    updateDisplay() {
+        this.displayElement.value = this.currentValue;
+    }
+}
+
+const display = document.getElementById("display");
+const calculator = new Calculator(display);
+
+document.querySelectorAll("button").forEach(button => {
+    button.addEventListener("click", () => {
+        const value = button.innerText;
+
+        if (value === "C") {
+            calculator.reset();
+        } else if (value === "=") {
+            calculator.calculate();
+        } else {
+            calculator.append(value);
+        }
+    });
+});
+</script>
+
+</body>
+</html>
